@@ -239,7 +239,7 @@ request. Thanks!
 ***The reason for all of this***
 
 During execution of this script's decryption sequence, the value of $_SERVER['CONFIGKEY'] is retrieved.  
-If $_SERVER['CONFIGKEY'] is not empty, the decryption sequence proceeds to decrypt any encryted environment
+If $_SERVER['CONFIGKEY'] is not empty, the decryption sequence proceeds to decrypt any encrpyted environment
 variables (or custom config file values).
 
 ## Documentation
