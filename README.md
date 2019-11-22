@@ -318,7 +318,7 @@ Example:
 ### Using the Encryption Flag
 
 Edit the configuration file you are using (.env or custom config file) and add the encryption flag defined in 
-`config/ecryptenv.php` as a prefix to each value you want to encrypt
+`config/encryptenv.php` as a prefix to each value you want to encrypt
 
 Example .env File with default Encrypt Flag !ENC:
 ```
@@ -334,7 +334,7 @@ SERVICE_API_KEY=!ENC:qZXFuZWh0NFE9PSIsInZhbHVlIjoidmNpRUV5em
 
 ```
 
-It works the same in a php configuration file that you define for `custom_config_file` in `config/ecryptenv.php`
+It works the same in a php configuration file that you define for `custom_config_file` in `config/encryptenv.php`
 
 ```php
 <?php
