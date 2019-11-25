@@ -7,30 +7,13 @@ use Illuminate\Encryption\Encrypter;
 
 class Decrypt
 {
-    protected $secEnv;
+    protected $configkey;
 
     function __construct()
     {
         $configkey = (new ConfigKey)->get();
 
-        if (!empty($configkey)) {
-
-            $configfile = (new ConfigFile)->get();
-
-            !empty($configkey) && count($configfile) && $crypt = new Encrypter($configkey);
-
-            $secEnv = [];
-
-            foreach ($configfile as $key => $value) {
-                //exclude config values that are arrays and test for ENC: prefix in each value
-                if (!is_array($value) && strpos($value, "ENC:") === 0) {
-                    //Decrypt values with ENC: prefix
-                    $secEnv[$key] = $crypt->decrypt(substr($value, 4));
-                }
-            }
-
-            $this->secEnv = $secEnv;
-        }
+        !empty($configkey) && $this->configkey = $configkey;
     }
 
     /**
@@ -42,6 +25,16 @@ class Decrypt
      */
     public function get($name)
     {
-        return isset($this->secEnv[$name]) ? $this->secEnv[$name] : null;
+        $configfile = (new ConfigFile)->get();
+
+        if (!empty($this->configkey) && count($configfile)) {
+
+            $crypt = new Encrypter($this->configkey);
+
+            return !empty($configfile[$name]) && !is_array($configfile[$name]) && strpos($configfile[$name], "ENC:") === 0 ?
+                $crypt->decrypt(substr($configfile[$name], 4)) :
+                    null;
+        }
+        return null;
     }
 }
