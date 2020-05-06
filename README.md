@@ -180,12 +180,11 @@ accomplished by simply creating a new console command or php script that can be 
 index.php read-only to non-privileged users.  These measures are obviously not full-proof, but it most likely will buy 
 you more time to mitigate a disaster in the event your server is hacked or a malicious user attempts to retrieve the 
 CONFIGKEY or one of your config file values.
- 
+
 Your web service configuration files (nginx.conf, /etc/nginx/sites-available/*, httpd.conf, etc) should only be readable 
-by the root user, otherwise your CONFIGKEY can be retrieved by a non-privileged shell user by simply opening the web 
-service config file. Most apache and nginx setups run their parent process as root, so there should not be an issue of 
+by the root user, otherwise your CONFIGKEY can be retrieved by a non-privileged shell user by simply opening the config file. Most apache and nginx setups run their parent process as root, so there should not be an issue of 
 the configuration files being readable by apache/nginx.
- 
+
 An example configuration for nginx and apache are below.  Configuration of nginx and apache are beyond the scope 
 of this README.  For help with nginx or apache, or for more information refer to:
 
@@ -221,7 +220,7 @@ PHP location block example with example CONFIGKEY
         try_files $uri /index.php =404;
         fastcgi_split_path_info ^(.+\.php)(/.+)$;
         ...
-        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param SCRIPT_FILENAME $script_filename;
         fastcgi_param CONFIGKEY $configkey;
         include fastcgi_params;
     }
@@ -252,7 +251,7 @@ variables (or custom config file values).
 
 ### Preparing for Encryption
 
-#### 1. Backup your existing config file (.env or otherwise) 
+#### 1. Backup your existing environment variables file (.env or otherwise) 
 
 To prepare for encryption you should first backup your existing .env (or custom config) file, as this process will overwrite your file with the
 encrypted values.  By design and for security reasons, it is not convenient to decrypt these values after the fact, as 
@@ -262,7 +261,7 @@ there is no console command to do so, and ideally the CONFIGKEY (encryption key)
 
 Update your Laravel and package-specific config files and change the values of each variable or property that you
 want to be encrypted to use the secEnv helper function (works exactly like the env() helper function)
- 
+
 Usage: secEnv('name','fallback_value')
 
 Example mail.php config file:
@@ -276,27 +275,26 @@ return [
     ...
 ];
 ```
-In the above example the the use of the secEnv helper function in the host, username, and password values indicates that
-the secEnv function should be used to retrieve the values of each of these keys to check if the value in your .env or 
-custom config file should be decrypted.  In the case of 'host', the value of MAIL_HOST in your custom config/.env file 
+In the above example, the the use of the secEnv helper function in the host, username, and password values indicates that
+the secEnv function should be used to retrieve the values of each of these keys, checking if the value in your .env or 
+custom config file should be decrypted.  In the case of 'host', the value of MAIL_HOST in your environment file 
 will be checked for an encrypted value.  If it is encrypted, the value will be decrypted to be readable by Laravel's 
-Config class.  If it cannot find a encrypted value, it will assign the fallback value (smtp.somehost.com in the example).  
-Just like the env() helper function, the fallback value for secEnv is optional, as seen in the example usage for username 
-and password 
+Config class.  If it cannot find an encrypted value, it will assign the fallback value (smtp.somehost.com in the example).  
+Just like the env() helper function, the fallback value for secEnv is optional.
 
 
 
 #### 3. Be sure the correct custom config file (if any) is defined in `config/encryptenv.php`
 
 By default this package overwrites your .env file if `custom_config_file` is not defined/blank.  If you don't want
-to use .env to store your configuration, define a filename for `custom_config_file`. This file must reside in your 
+to use .env to store your environment variables, define a filename for `custom_config_file`. This file must reside in your 
 Laravel config path, and the file must contain an array with the keys and values of your configuration (like all other
 Laravel config files).
 
 _**Comments at the top of your custom configuration file**_
 
 If you use a custom configuration file and wish to preserve a comment block at the top of the file, you must use the
-opening doc block convention /** instead of a normal opening comment /*.  
+opening doc block convention /\** instead of a normal opening comment /*.  
 This tells the encryption sequence to preserve your comment block at the top of the file.
 
 Example:
@@ -313,11 +311,11 @@ Example:
 |
 */
 ```
-  
+
 
 ### Using the Encryption Flag
 
-Edit the configuration file you are using (.env or custom config file) and add the encryption flag defined in 
+Edit the environment variables file you are using and add the encryption flag defined in 
 `config/encryptenv.php` as a prefix to each value you want to encrypt
 
 Example .env File with default Encrypt Flag !ENC:
@@ -354,7 +352,7 @@ and will be replaced with the encrypted string when running the console command 
 
 ### Running the Console Command
 
-To run the encryption sequence in your config file, execute the artisan console command included with this package
+To run the encryption sequence in your environment variables file, execute the artisan console command included with this package
 
 The artisan console command encryptenv:encrypt has one optional argument `configkey`.  Having the config key as an optional
 argument allows you to add this console command to your own scripts for things like automation in your deployment process.
@@ -369,7 +367,7 @@ https://stackoverflow.com/questions/6475524/how-do-i-prevent-commands-from-showi
 You will need to generate a new CONFIGKEY if you don't already have one.
 
 If you put `generate-key` in the optional configkey argument, the encryptenv:encrypt artisan command will automatically
-generate a new CONFIGKEY and encrypt your .env (or custom config) file values.  
+generate a new CONFIGKEY and encrypt the flagged values in your environment variables file.  
 
 Upon completion of the encryption, it will display your new CONFIGKEY (See example below)
 
@@ -414,7 +412,7 @@ Done!
 
 When the command has completed the encryption sequence it will display "Done!"
 
-Check your .env/config file to make sure the values you want encrypted are as you expect.  
+Check your environment variables file to make sure the values you want encrypted are as you expect.  
 
 Your .env file (or custom config) will look similar to this:
 ```php
