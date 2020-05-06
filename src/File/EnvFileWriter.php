@@ -51,6 +51,7 @@ class EnvFileWriter
                 if ($chkstrpos !== false) {
                     //Get env variable name from line
                     $varname = substr($envline, 0, ($chkstrpos - 1));
+                    $envline = str_replace($varname.'=','', $envline);
                     //Get existing value from line
                     $fileval = substr($envline, strlen($this->payload->getFlag()));
                     //Encrypt existing value
