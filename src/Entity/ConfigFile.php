@@ -10,6 +10,11 @@ class ConfigFile
     protected $configarr;
 
     /**
+     * @var array
+     */
+    protected $encenv_config;
+
+    /**
      * @var string
      */
     protected $configpath;
@@ -29,6 +34,7 @@ class ConfigFile
     {
         if (file_exists(config_path('encryptenv.php'))) {
             $encenv_config = require(config_path('encryptenv.php'));
+            $this->encenv_config = $encenv_config;
         }
         $this->configfile = !empty($encenv_config['custom_config_file']) ? $encenv_config['custom_config_file'] : null;
         !empty($encenv_config['custom_config_file']) && $this->configpath = config_path($encenv_config['custom_config_file']);
@@ -52,6 +58,16 @@ class ConfigFile
     public function get()
     {
         return $this->configarr;
+    }
+
+    /**
+     * Get Package Config properties as array
+     *
+     * @return array
+     */
+    public function getEncEnvConfig()
+    {
+        return $this->encenv_config;
     }
 
     /**

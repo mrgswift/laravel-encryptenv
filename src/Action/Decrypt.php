@@ -25,20 +25,16 @@ class Decrypt
      */
     public function get($name)
     {
-        $configfile = (new ConfigFile)->get();
+        $configfile = new ConfigFile;
+        $configarr = $configfile->get();
 
         if (!empty($this->configkey) && count($configfile)) {
 
-            $encenv_config = ['cipher' => ''];
-            if (file_exists(config_path('encryptenv.php'))) {
-                $encenv_config = require(config_path('encryptenv.php'));
-            }
+            $crypt = new Encrypter($this->configkey, $configfile->getEncEnvConfig()['cipher']);
 
-            $crypt = new Encrypter($this->configkey, $encenv_config['cipher']);
-
-            return !empty($configfile[$name]) && !is_array($configfile[$name]) && strpos($configfile[$name], "ENC:") === 0 ?
-                $crypt->decrypt(substr($configfile[$name], 4)) :
-                    null;
+            return !empty($configarr[$name]) && !is_array($configarr[$name]) && strpos($configarr[$name], "ENC:") === 0 ?
+                $crypt->decrypt(substr($configarr[$name], 4)) :
+                null;
         }
         return null;
     }
