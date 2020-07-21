@@ -28,7 +28,7 @@ class Decrypt
         $configfile = new ConfigFile;
         $configarr = $configfile->get();
 
-        if (!empty($this->configkey) && count($configfile)) {
+        if (!empty($this->configkey) && count($configarr)) {
 
             $crypt = new Encrypter($this->configkey, $configfile->getEncEnvConfig()['cipher']);
 
