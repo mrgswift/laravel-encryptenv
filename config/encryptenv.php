@@ -87,5 +87,20 @@ return [
     |
     */
 
-    'custom_config_output' => 'env'
+    'custom_config_output' => 'env',
+    
+    /*
+    |--------------------------------------------------------------------------
+    | Config Key Alternative Location on Server
+    |--------------------------------------------------------------------------
+    |
+    | This is only applied when any custom location is provided below and this
+    | will be used as a fallback config key specially for Jobs or CLI commands
+    | artisan.
+    |
+    | NOTE: Keep it empty if your application have no Jobs or artisan commands
+    |
+    */
+
+    'config_key_path' => env('CONFIGKEY_PATH', '')
 ];
