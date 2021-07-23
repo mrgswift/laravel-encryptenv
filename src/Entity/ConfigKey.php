@@ -1,15 +1,13 @@
 <?php
 namespace mrgswift\EncryptEnv\Entity;
 
-use Config;
-
 class ConfigKey
 {
     protected $configkey;
 
     function __construct()
     {
-        $configkeyPath = Config::get('encryptenv.config_key_path');
+        $configkeyPath = config('encryptenv.config_key_path');
 
         if (!empty($_SERVER['CONFIGKEY'])) {
 
