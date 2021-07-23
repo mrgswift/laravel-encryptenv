@@ -17,7 +17,7 @@ class ConfigKey
 
         } elseif (empty($_SERVER['CONFIGKEY']) && !empty($configkeyPath)) {
             
-            $this->configkey = preg_replace('/\s+/', ' ', trim($configkeyPath));
+            $this->configkey = preg_replace('/\s+/', ' ', trim(file_get_contents($configkeyPath)));
 
         } else {
 
