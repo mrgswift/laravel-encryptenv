@@ -1,3 +1,5 @@
+**v1.0.8** - Removed Symfony Error handler from encryptenv:console command
+
 **v1.0.7** - Added artisan encryptenv:console command 
 
 **v1.0.6** - Updated dependencies to support Laravel 9
