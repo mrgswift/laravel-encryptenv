@@ -450,7 +450,7 @@ The second optional argument is `configkey`.  This allows you to add console com
 If you do not provide the configkey argument, you will be prompted for your Config Key,
 either 16 characters or 32 characters long depending on which cipher you defined in `config/encryptenv.php`  
 
-Enter your Config Key into the prompt and press Enter when you are ready to start the encryption sequence
+Enter your Config Key into the prompt and press Enter when you are ready to execute your console command
 
 Example with Config Key prompt:
 ```console
