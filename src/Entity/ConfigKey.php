@@ -7,10 +7,19 @@ class ConfigKey
 
     function __construct()
     {
+
         if (!empty($_SERVER['CONFIGKEY'])) {
 
             $this->configkey = $_SERVER['CONFIGKEY'];
 
+        } else {
+            $configkey = getenv('APP_CONFIGKEY');
+
+            if ($configkey !== false) {
+
+                $this->configkey = $configkey;
+
+            }
         }
     }
     /**

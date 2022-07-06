@@ -41,7 +41,7 @@ class ConfigFile
         $this->configarr = !empty($this->configpath) &&
         file_exists($this->configpath) ?
             require $this->configpath :
-            $_ENV;
+            (!empty($_ENV) ? $_ENV : getenv());
 
         !empty($this->configpath) && !empty($encenv_config['custom_config_output']) ?
             $this->configoutput = $encenv_config['custom_config_output'] :

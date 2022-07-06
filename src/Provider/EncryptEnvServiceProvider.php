@@ -20,6 +20,10 @@ class EncryptEnvServiceProvider extends ServiceProvider
         $this->publishes([
             __DIR__.'/../Console/EncryptEnvValues.php' => app_path('Console/Commands/EncryptEnvValues.php')
         ], 'console');
+
+        $this->publishes([
+            __DIR__.'/../Console/SecEnvConsoleCommand.php' => app_path('Console/Commands/SecEnvConsoleCommand.php')
+        ], 'console');
     }
 
     public function register()

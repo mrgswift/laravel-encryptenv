@@ -44,6 +44,7 @@ This publishes the following files:
 app/Helpers/secEnv.php
 config/encryptenv.php
 app/Console/Commands/EncryptEnvValues.php
+app/Console/Commands/SecEnvConsoleCommand.php
 ```
 
 #
@@ -59,7 +60,7 @@ Clear out and re-generate your autoload files, otherwise the new files entry you
 $ composer dump-autoload
 ```
 #
-#### Add the new console command to the commands array in `app/Console/Kernel.php`
+#### Add the new console commands to the commands array in `app/Console/Kernel.php`
 ```php
 
     /**
@@ -69,7 +70,8 @@ $ composer dump-autoload
      */
     protected $commands = [
         ...
-        'App\Console\Commands\EncryptEnvValues'
+        'App\Console\Commands\EncryptEnvValues',
+        'App\Console\Commands\SecEnvConsoleCommand'
     ];
 ```
 #
@@ -245,7 +247,7 @@ variables (or custom config file values).
 
 1. [Preparing for Encryption](#preparing-for-encryption)
 2. [Using the Encryption flag](#using-the-encryption-flag)
-3. [Running the Console Command](#running-the-console-command)
+3. [Running the Console Commands](#running-the-console-commands)
 4. [File Permissions](#file-permissions)
 
 
@@ -350,16 +352,20 @@ return [
 In both examples (above) the values for APP_KEY, MYSQL_USER, MYSQL_PASS, and SERVICE_API_KEY are flagged for encryption
 and will be replaced with the encrypted string when running the console command (below).
 
-### Running the Console Command
+### Running the Console Commands
 
-To run the encryption sequence in your environment variables file, execute the artisan console command included with this package
+#### Encrypting your environment variables
 
-The artisan console command encryptenv:encrypt has one optional argument `configkey`.  Having the config key as an optional
+`php artisan encryptenv:encrypt`
+
+This command will run the encryption sequence in your environment variables file, execute the artisan console command included with this package
+
+There is one optional argument `configkey`.  Having the config key as an optional
 argument allows you to add this console command to your own scripts for things like automation in your deployment process.
 If you do use the configkey argument, it is recommended that you include safeguards to prevent this console command from 
-being recorded in your shell's history (to protect your Config Key).     
+being recorded in your shell's history (to protect your Config Key).
 
-More on this here:
+More on protecting your config key here:
 https://stackoverflow.com/questions/6475524/how-do-i-prevent-commands-from-showing-up-in-bash-history
 
 ##### Generating a new CONFIGKEY (encryption key)
@@ -382,7 +388,7 @@ You will need to update your web service configuration file with this new CONFIG
 Refer to the Install [Configure your web service] section in the README for more info
 ```
 
-##### Running Console Command With An Existing CONFIGKEY
+##### Running This Command With An Existing CONFIGKEY
 
 If you already have a CONFIGKEY set up and configured for your web service, simply run the encryptenv:encrypt artisan
 command as follows:
@@ -429,6 +435,20 @@ MAIL_PASSWORD=ENC:eyJpdiI6IlU4a2lhMEFqa3hlcWZyQTlyOXd1c2c9PSIsInZhbHVlIjoiVENPRF
 If you set everything up correctly, Laravel should now be working with your encrypted config values.
 
 Note: You should run `php artisan config:clear` to clear your config cache just to be sure everything is truly working.
+
+### Running console commands that require encrypted environment variables
+`php artisan encryptenv:console`
+
+This command exists to allow you to run console commands that require your environment variables to be decrypted during execution.
+
+For example `php artisan encryptenv:console 'php artisan migrate'`
+
+The first required argument `console_command` which must be wrapped in single quotes or regular quotes
+
+The second optional argument is `configkey`.  This allows you to add console commands that require the CONFIGKEY to deployment scripts or cron jobs.
+
+As noted above, you should do your due diligence to protect your config key from being saved in your shell's history.
+
 
 ### File Permissions
 

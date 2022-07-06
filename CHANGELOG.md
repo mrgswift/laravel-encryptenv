@@ -1,3 +1,5 @@
+**v1.0.7** - Added artisan encryptenv:console command 
+
 **v1.0.6** - Updated dependencies to support Laravel 9
 
 **v1.0.5** - Updated dependencies to support Laravel 8
