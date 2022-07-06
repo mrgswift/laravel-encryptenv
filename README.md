@@ -443,7 +443,7 @@ This command exists to allow you to run console commands that require your envir
 
 For example `php artisan encryptenv:console 'php artisan migrate'`
 
-The first required argument `console_command` which must be wrapped in single quotes or regular quotes
+The first required argument `console_command`, must be wrapped in single quotes or regular quotes
 
 The second optional argument is `configkey`.  This allows you to add console commands that require the CONFIGKEY to deployment scripts or cron jobs.
 
