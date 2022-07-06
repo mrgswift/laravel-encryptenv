@@ -456,6 +456,7 @@ Example with Config Key prompt:
 ```console
  Config Key (16 char key):
  > 95UMleZOvpAPVyba
+```
 
 Once the Config key is set, the console command you entered into the console_command argument will be executed with decrypted access to your environment variables until execution is completed.
 
