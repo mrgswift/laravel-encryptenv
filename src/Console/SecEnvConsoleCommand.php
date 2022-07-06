@@ -56,11 +56,6 @@ class SecEnvConsoleCommand extends Command
 
         $process->run();
 
-        // executes after the command finishes
-        if (!$process->isSuccessful()) {
-            throw new ProcessFailedException($process);
-        }
-
         echo $process->getOutput();
 
         unset($process);
