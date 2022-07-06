@@ -447,6 +447,18 @@ The first required argument `console_command`, must be wrapped in single quotes 
 
 The second optional argument is `configkey`.  This allows you to add console commands that require the CONFIGKEY to deployment scripts or cron jobs.
 
+If you do not provide the configkey argument, you will be prompted for your Config Key,
+either 16 characters or 32 characters long depending on which cipher you defined in `config/encryptenv.php`  
+
+Enter your Config Key into the prompt and press Enter when you are ready to start the encryption sequence
+
+Example with Config Key prompt:
+```console
+ Config Key (16 char key):
+ > 95UMleZOvpAPVyba
+
+Once the Config key is set, the console command you entered into the console_command argument will be executed with decrypted access to your environment variables until execution is completed.
+
 As noted above, you should do your due diligence to protect your config key from being saved in your shell's history.
 
 
