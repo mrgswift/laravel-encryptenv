@@ -1,3 +1,7 @@
+**v1.0.6** - Updated dependencies to support Laravel 9
+
+**v1.0.5** - Updated dependencies to support Laravel 8
+
 **v1.0.4** - Fixed typo that causes error during decryption **(Everyone should update to this version for everything to work properly)** 
 
 **v1.0.3** - Added Laravel 7 Support + Bug fix preventing AES-256-CBC cipher from working properly 
