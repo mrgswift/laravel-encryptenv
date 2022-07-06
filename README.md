@@ -436,7 +436,7 @@ If you set everything up correctly, Laravel should now be working with your encr
 
 Note: You should run `php artisan config:clear` to clear your config cache just to be sure everything is truly working.
 
-### Running console commands that require encrypted environment variables
+### Running console commands that require decrypted environment variables
 `php artisan encryptenv:console`
 
 This command exists to allow you to run console commands that require your environment variables to be decrypted during execution.
