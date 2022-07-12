@@ -8,7 +8,7 @@ This is accomplished through the added helper function `secEnv()` to replace `en
 an encrypted value in your configuration file. 
 
 Also included is a console command to encrypt 
-the values of all flagged .env or config file variables/keys.
+the values of all flagged .env or config file variables/keys, and a console command to run other console commands (scheduled tasks, artisan commands, etc) that require the decrypted environment variables to run.
 
 Some setup/configuration is required to get everything working correctly.
 
