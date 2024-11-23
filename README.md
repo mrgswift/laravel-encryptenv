@@ -26,7 +26,7 @@ Some setup/configuration is required to get everything working correctly.
 $ composer require mrgswift/laravel-encryptenv
 ```
 #
-#### Add package provider EncryptEnvServiceProvider to providers in `config/app.php`
+#### Add package provider EncryptEnvServiceProvider to providers in `config/app.php` (`bootstrap/providers.php` in Laravel 11)
 ```php
 'providers' => [
     ...
@@ -60,7 +60,7 @@ Clear out and re-generate your autoload files, otherwise the new files entry you
 $ composer dump-autoload
 ```
 #
-#### Add the new console commands to the commands array in `app/Console/Kernel.php`
+#### Add the new console commands to the commands array in `app/Console/Kernel.php` (Not necessary in Laravel 11)
 ```php
 
     /**
