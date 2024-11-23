@@ -1,3 +1,7 @@
+**v1.1.0** - Updated dependencies to support Laravel 11
+
+**v1.0.9** - Updated dependencies to support Laravel 10
+
 **v1.0.8** - Removed Symfony Error handler from encryptenv:console command
 
 **v1.0.7** - Added artisan encryptenv:console command 
